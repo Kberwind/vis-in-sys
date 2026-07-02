@@ -8,4 +8,4 @@ The excel sheet used for content analysis of open-ended questions
 The final report of findings and design considerations
 The presentation slides
 
-This repository does not include the dataset, as it is not publicly availible.
+This repository does not include the dataset, as the whole dataset is not publicly availible.
