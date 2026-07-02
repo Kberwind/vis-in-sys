@@ -1,0 +1,1969 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+<meta name="date" content="2026-07-02" />
+
+<title>GLAT</title>
+
+<script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/spacelab.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Seminar Visual and Interactive Systems</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="glat.html">GLAT</a>
+</li>
+<li>
+  <a href="survey.html">Online Survey</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">GLAT</h1>
+<h4 class="date">2026-07-02</h4>
+
+</div>
+
+<div id="TOC">
+<ul>
+<li><a href="#descriptive-statistics-for-glat-questionnaire"
+id="toc-descriptive-statistics-for-glat-questionnaire">Descriptive
+Statistics for GLAT Questionnaire</a>
+<ul>
+<li><a href="#whole-scale" id="toc-whole-scale">Whole Scale</a></li>
+<li><a href="#dimensions" id="toc-dimensions">Dimensions</a></li>
+</ul></li>
+<li><a href="#means-comparison-of-sub-dimensions"
+id="toc-means-comparison-of-sub-dimensions">Means Comparison of
+Sub-Dimensions</a>
+<ul>
+<li><a href="#friedman-test" id="toc-friedman-test">Friedman
+Test</a></li>
+<li><a href="#assumptions" id="toc-assumptions">Assumptions</a></li>
+</ul></li>
+<li><a href="#frequencies-for-glat-items"
+id="toc-frequencies-for-glat-items">Frequencies for GLAT Items</a>
+<ul>
+<li><a href="#item-level-correct-v.-incorrect"
+id="toc-item-level-correct-v.-incorrect">Item Level Correct v.
+Incorrect</a></li>
+<li><a href="#question-1" id="toc-question-1">Question 1</a></li>
+<li><a href="#question-2" id="toc-question-2">Question 2</a></li>
+<li><a href="#question-3" id="toc-question-3">Question 3</a></li>
+<li><a href="#question-4" id="toc-question-4">Question 4</a></li>
+<li><a href="#question-5" id="toc-question-5">Question 5</a></li>
+<li><a href="#question-6" id="toc-question-6">Question 6</a></li>
+<li><a href="#question-7" id="toc-question-7">Question 7</a></li>
+<li><a href="#question-8" id="toc-question-8">Question 8</a></li>
+<li><a href="#question-9" id="toc-question-9">Question 9</a></li>
+<li><a href="#question-10" id="toc-question-10">Question 10</a></li>
+<li><a href="#question-11" id="toc-question-11">Question 11</a></li>
+<li><a href="#question-12" id="toc-question-12">Question 12</a></li>
+</ul></li>
+</ul>
+</div>
+
+<p>The Generative AI Literacy Assessment Test (GLAT), is a performance
+based questionnaire developed by Jin et. al. (2025), measuring
+participants’ understanding of core concepts about the capabilities and
+proper use of GenAI tools. It was designed for use among higher
+education students. The GLAT underwent three validation studies which
+reported strong content, structural, and external validity, making it a
+useful tool for objectively measuring GenAI competence. The test
+comprises twenty questions separated into four dimensions. Twelve
+questions across all for dimensions were selected for the present
+study.</p>
+<p><strong>Know &amp; Understand:</strong> This dimension tests
+participants’ knowledge of GenAI structure and architecture, as well as
+the general capabilities of a GenAI model. It contains concepts such as
+“foundation models (e.g., LLM and diffusion model), generation
+capability, zero-shot learning, prompt-based development, content
+generation, token, Artificial General Intelligence (AGI), model
+alignment, [and] Retrieval-Augmented Generation (RAG).”</p>
+<p><strong>Use &amp; Apply:</strong> This dimension tests participants’
+understanding of what tasks GenAI models can do and how they do them. It
+contains concepts such as “contextual understanding in content creation,
+knowledge updating and integration, information retrieval and synthesis,
+token management and limitation, [and] multimodal content
+generation.”</p>
+<p><strong>Evaluate &amp; Create:</strong> This dimension tests
+participants’ knowledge of how to supervise and evaluate the output of a
+GenAI model in order to create accurate, high quality content. It
+contains concepts such as “trustworthiness of LLM outputs, LLM knowledge
+cutoff, information cross-check (Hallucination), GenAI-generated content
+authenticity, [and] voice cloning with GenAI.”</p>
+<p><strong>Ethics:</strong> This dimension tests participants’ knowledge
+of GenAI limitations and ethical issues that may arise from use of GenAI
+models. It contains concepts such as, “model biases, black box issue in
+GenAI, copyright issues in GenAI-generated content, content safety,
+[and] privacy concerns with GenAI.”</p>
+<div id="descriptive-statistics-for-glat-questionnaire"
+class="section level1 tabset">
+<h1 class="tabset">Descriptive Statistics for GLAT Questionnaire</h1>
+<div id="whole-scale" class="section level2">
+<h2>Whole Scale</h2>
+<p>On the whole GLAT scale, participants got an average of slightly more
+than half of questions correct, with a moderately small standard
+deviation (M=6.84, SD=2.49). This indicates there may be gaps in
+participant knowledge about GenAI.</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+Descriptive Statistics for Total Correct Questions
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+mean
+</th>
+<th style="text-align:left;">
+median
+</th>
+<th style="text-align:left;">
+sd
+</th>
+<th style="text-align:left;">
+min
+</th>
+<th style="text-align:left;">
+max
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+6.84
+</td>
+<td style="text-align:left;">
+7
+</td>
+<td style="text-align:left;">
+2.48555
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="dimensions" class="section level2">
+<h2>Dimensions</h2>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+Descriptive Statistics for Sub-Dimensions
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+variable
+</th>
+<th style="text-align:left;">
+mean
+</th>
+<th style="text-align:left;">
+median
+</th>
+<th style="text-align:left;">
+sd
+</th>
+<th style="text-align:left;">
+min
+</th>
+<th style="text-align:left;">
+max
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+know_understand
+</td>
+<td style="text-align:left;">
+2.14
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+0.8573809
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+use_apply
+</td>
+<td style="text-align:left;">
+1.38
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+0.9665846
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+evaluate_create
+</td>
+<td style="text-align:left;">
+1.64
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+1.0451052
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ethics
+</td>
+<td style="text-align:left;">
+1.68
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+1.0961901
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+3
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="means-comparison-of-sub-dimensions"
+class="section level1 tabset">
+<h1 class="tabset">Means Comparison of Sub-Dimensions</h1>
+<div id="friedman-test" class="section level2">
+<h2>Friedman Test</h2>
+<p>The Friedman test is a non-parametric alternative to a repeated
+measures ANOVA. I conducted a Friedman test looking for differences
+between the mean scores of each dimension. Results show a significant
+difference between dimensions (Friedman <span
+class="math inline">\(X^2\)</span>(3, n=50)= 18.315, p&lt;0.001). A
+Wilcoxon rank sum test with Bonferroni correction revealed a significant
+difference between the <strong>Know &amp; Understand</strong> dimension
+and the <strong>Use &amp; Apply</strong> dimension (p&lt;0.001).</p>
+<pre><code>## 
+##  Friedman rank sum test
+## 
+## data:  dimensions_long$score, dimensions_long$dimension and dimensions_long$participant_id
+## Friedman chi-squared = 18.315, df = 3, p-value = 0.0003787</code></pre>
+<pre><code>## 
+##  Pairwise comparisons using Wilcoxon rank sum test with continuity correction 
+## 
+## data:  dimensions_long$score and dimensions_long$dimension 
+## 
+##                 ethics  evaluate_create know_understand
+## evaluate_create 1.00000 -               -              
+## know_understand 0.22398 0.09782         -              
+## use_apply       0.92442 1.00000         0.00099        
+## 
+## P value adjustment method: bonferroni</code></pre>
+</div>
+<div id="assumptions" class="section level2">
+<h2>Assumptions</h2>
+<p>After testing for normality of residuals, it was determined that the
+data behave too much like ordinal data, and was not normal. Therefore,
+ANOVA testing was not appropriate. Instead the non-parametric Friedman
+test was performed.</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+Shapiro-Wilk Tests by Dimension
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+dimension
+</th>
+<th style="text-align:left;">
+variable
+</th>
+<th style="text-align:left;">
+statistic
+</th>
+<th style="text-align:left;">
+p
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+ethics
+</td>
+<td style="text-align:left;">
+score
+</td>
+<td style="text-align:left;">
+0.8574019
+</td>
+<td style="text-align:left;">
+0.000025
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+evaluate_create
+</td>
+<td style="text-align:left;">
+score
+</td>
+<td style="text-align:left;">
+0.8699381
+</td>
+<td style="text-align:left;">
+0.000056
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+know_understand
+</td>
+<td style="text-align:left;">
+score
+</td>
+<td style="text-align:left;">
+0.8123574
+</td>
+<td style="text-align:left;">
+0.000002
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+use_apply
+</td>
+<td style="text-align:left;">
+score
+</td>
+<td style="text-align:left;">
+0.8750330
+</td>
+<td style="text-align:left;">
+0.000079
+</td>
+</tr>
+</tbody>
+</table>
+<p><img src="glat_files/figure-html/assumptions-1.png" width="672" /></p>
+</div>
+</div>
+<div id="frequencies-for-glat-items" class="section level1 tabset">
+<h1 class="tabset">Frequencies for GLAT Items</h1>
+<div id="item-level-correct-v.-incorrect" class="section level2">
+<h2>Item Level Correct v. Incorrect</h2>
+<p>Below are frequencies for the number of correct and incorrect
+responses to each question in the GLAT as well as the percent of
+participants who answered the question correctly. Excluding the first
+two questions where 90% and 72% of participants respectively answered
+the questions correctly, all other questions were answered correctly by
+roughly half of participants. This suggests that the gaps in knowledge
+may be diverse among participants.</p>
+<p>For each individual item table, the column n represents the number of
+participants who chose that response option.</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+Frequencies and % Correct for GLAT Items
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Question
+</th>
+<th style="text-align:right;">
+Correct
+</th>
+<th style="text-align:right;">
+Incorrect
+</th>
+<th style="text-align:right;">
+Percent_Correct
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Question_1
+</td>
+<td style="text-align:right;">
+45
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+90
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Question_2
+</td>
+<td style="text-align:right;">
+36
+</td>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+72
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Question_3
+</td>
+<td style="text-align:right;">
+26
+</td>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:right;">
+52
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Question_4
+</td>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:right;">
+28
+</td>
+<td style="text-align:right;">
+44
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Question_5
+</td>
+<td style="text-align:right;">
+28
+</td>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:right;">
+56
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Question_6
+</td>
+<td style="text-align:right;">
+19
+</td>
+<td style="text-align:right;">
+31
+</td>
+<td style="text-align:right;">
+38
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Question_7
+</td>
+<td style="text-align:right;">
+32
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+64
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Question_8
+</td>
+<td style="text-align:right;">
+27
+</td>
+<td style="text-align:right;">
+23
+</td>
+<td style="text-align:right;">
+54
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Question_9
+</td>
+<td style="text-align:right;">
+23
+</td>
+<td style="text-align:right;">
+27
+</td>
+<td style="text-align:right;">
+46
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Question_10
+</td>
+<td style="text-align:right;">
+23
+</td>
+<td style="text-align:right;">
+27
+</td>
+<td style="text-align:right;">
+46
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Question_11
+</td>
+<td style="text-align:right;">
+32
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+64
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Question_12
+</td>
+<td style="text-align:right;">
+29
+</td>
+<td style="text-align:right;">
+21
+</td>
+<td style="text-align:right;">
+58
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="question-1" class="section level2">
+<h2>Question 1</h2>
+<p>Participants overwhelmingly answered this question correctly
+demonstrating a clear understanding of the definition of GenAI.</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+Frequencies for Question 1: GLAT-1
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+<ol style="list-style-type: decimal">
+<li>Welche der Folgenden beschreibt “Generative KI“ am besten?
+</th>
+<th style="text-align:right;">
+n
+</th>
+<th style="text-align:right;">
+Percent
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Ein KI-System, das die Geschwindigkeit und Genauigkeit des Datenabrufs
+in Suchmaschinen verbessern soll.
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Eine Form der künstlichen Intelligenz, die sich auf die Übersetzung von
+Sprachen in Echtzeit konzentriert.
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+KI, die neue Inhalte wie Texte, Bilder oder Musik erstellt, indem sie
+aus vorhandenen Daten lernt.
+</td>
+<td style="text-align:right;">
+45
+</td>
+<td style="text-align:right;">
+90
+</td>
+</tr>
+</tbody>
+</table></li>
+</ol>
+<p>Below is the question in the original English, as well as the
+original English responses in the same order they appear on the table
+above. The correct response is in bold letters.</p>
+<p>Which of the following best describes “generative AI”?</p>
+<p>B) An AI system designed to enhance the speed and accuracy of data
+retrieval in search engines.</p>
+<p>C) A form of artificial intelligence that focuses on translating
+languages in real-time.</p>
+<p><strong>A) AI that creates new content like text, images, or music by
+learning from existing data.</strong></p>
+<p>The following is another possible response in the original English,
+but it was not chosen by any participant in the sample and therefore
+does not appear in the table above.</p>
+<p>D) AI technology used primarily for managing and organizing large
+databases.</p>
+</div>
+<div id="question-2" class="section level2">
+<h2>Question 2</h2>
+<p>Participants answered this question mostly correct showing a good
+understanding of prompting requirements, but about 26% of the sample
+demonstrated a misunderstanding of training or data requirements.</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+Frequencies for Question 2: GLAT-5
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+<ol start="2" style="list-style-type: decimal">
+<li>Welcher der Folgenden ist eine mögliche Herausforderung bei der
+Verwendung von Prompt-basierter Entwicklung für die Textgenerierung?
+</th>
+<th style="text-align:right;">
+n
+</th>
+<th style="text-align:right;">
+Percent
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Das Erfordernis eines komplexen Feature-Engineerings.
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Das Sprachmodell kann nur binäre Ausgaben erzeugen.
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Der Bedarf an umfangreichen gelabelten Daten zum Trainieren des Modells.
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+16
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Die Erstellung eines Prompts, der den gewünschten Kontext und die
+Nuancen genau erfasst.
+</td>
+<td style="text-align:right;">
+36
+</td>
+<td style="text-align:right;">
+72
+</td>
+</tr>
+</tbody>
+</table></li>
+</ol>
+<p>Below is the question in the original English, as well as the
+original English responses in the same order they appear on the table
+above. The correct response is in bold letters.</p>
+<p>Which of the following is a potential challenge when using
+prompt-based development for text generation?</p>
+<p>D) The requirement for complex feature engineering.</p>
+<p>A) The language model can only generate binary output.</p>
+<p>B) The need for extensive labeled data to train the model.</p>
+<p><strong>C) Crafting a prompt that accurately captures the desired
+context and nuances.</strong></p>
+</div>
+<div id="question-3" class="section level2">
+<h2>Question 3</h2>
+<p>Slightly under half of participants do not have a comprehensive
+understanding of the definition of Artificial General Intelligencce
+(AGI).</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+Frequencies for Question 3: GLAT-7
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+<ol start="3" style="list-style-type: decimal">
+<li>Welche der Folgenden ist KEINE Voraussetzung dafür, dass eine KI als
+künstliche allgemeine Intelligenz (AGI) angesehen werden kann?
+</th>
+<th style="text-align:right;">
+n
+</th>
+<th style="text-align:right;">
+Percent
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Die Fähigkeit, Aufgaben in verschiedenen Bereichen mit menschenähnlicher
+Fertigkeit auszuführen.
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+22
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Die Fähigkeit, natürliche Sprache zu verstehen und zu erzeugen.
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Die Fähigkeit, ohne menschliches Zutun zu lernen und sich an neue
+Aufgaben anzupassen.
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+18
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Die Fähigkeit, zukünftige Ereignisse mit perfekter Genauigkeit
+vorherzusagen.
+</td>
+<td style="text-align:right;">
+26
+</td>
+<td style="text-align:right;">
+52
+</td>
+</tr>
+</tbody>
+</table></li>
+</ol>
+<p>Below is the question in the original English, as well as the
+original English responses in the same order they appear on the table
+above. The correct response is in bold letters.</p>
+<p>Which of the following is NOT a requirement for an AI to be
+considered artificial general intelligence (AGI)?</p>
+<p>B) The capability to perform tasks across various domains with
+human-like proficiency.</p>
+<p>D) The capacity to understand and generate natural language.</p>
+<p>A) The ability to learn and adapt to new tasks without human
+intervention.</p>
+<p><strong>C) The ability to predict future events with perfect
+accuracy.</strong></p>
+</div>
+<div id="question-4" class="section level2">
+<h2>Question 4</h2>
+<p>While many in the sample understand that presenting competitor
+example in the prompt will result in the model taking information
+directly from those examples (possibly to the detriment of the
+hypothetical pitch), a nearly equal number of participants overlooked
+that possibility, believing instead that providing the instruction to
+use persuasive language would be least effective.</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+Frequencies for Question 4: GLAT-9
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+<ol start="4" style="list-style-type: decimal">
+<li>Welche der folgenden Strategien ist bei der Verwendung generativer
+KI zur Erstellung eines Marketing-Pitches AM WENIGSTEN effektiv?
+</th>
+<th style="text-align:right;">
+n
+</th>
+<th style="text-align:right;">
+Percent
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Der KI eine Liste der Produkte von Mitbewerber:innen zur Verfügung
+stellen.
+</td>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:right;">
+44
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Die KI auffordern, Alleinstellungsmerkmale und Vorteile zu nennen.
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+12
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Die KI auffordern, überzeugende Sprachtechniken zu verwenden.
+</td>
+<td style="text-align:right;">
+21
+</td>
+<td style="text-align:right;">
+42
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Versorgung der KI mit Informationen über die Zielgruppe.
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+</tbody>
+</table></li>
+</ol>
+<p>Below is the question in the original English, as well as the
+original English responses in the same order they appear on the table
+above. The correct response is in bold letters.</p>
+<p>When using generative AI to create a marketing pitch, which of the
+following strategies is LEAST likely to be effective?</p>
+<p><strong>D) Providing the AI with a list of competitors’
+products.</strong></p>
+<p>B) Asking the AI to include unique selling points and benefits.</p>
+<p>C) Requesting the AI to use persuasive language techniques.</p>
+<p>A) Supplying the AI with information about the target audience.</p>
+</div>
+<div id="question-5" class="section level2">
+<h2>Question 5</h2>
+<p>Slightly over half the sample demonstrated an understanding of a
+GenAI model’s knowledge cut-off. However, the other half of the sample
+possibly do not understand the knowledge cut-off or have misconceptions
+about the most efficient way to handle issues arising from outdated
+information in the training data.</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+Frequencies for Question 5: GLAT-10
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+<ol start="5" style="list-style-type: decimal">
+<li>Nach dem Einrichten eines Chatbots für den Kundenservice stellen Sie
+fest, dass dieser häufig veraltete Informationen über die
+Unternehmensrichtlinien liefert. Was ist die beste Vorgehensweise, um
+dieses Problem zu beheben?
+</th>
+<th style="text-align:right;">
+n
+</th>
+<th style="text-align:right;">
+Percent
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Durchführung einer umfassenden Prüfung der Leistungsmetriken des
+Chatbots, um Bereiche mit Verbesserungspotenzial zu ermitteln.
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+16
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Einrichtung eines Systems, bei dem komplexe oder richtlinienbezogene
+Anfragen an menschliche Agenten weitergeleitet werden, um genaue
+Antworten zu erhalten.
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+20
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Implementieren einer Feedbackschleife, in der Nutzer:innen veraltete
+Informationen zur Überprüfung markieren können.
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Planung regelmäßiger Updates der Schulungsdaten des Chatbots, um die
+neuesten Unternehmensrichtlinien einzubeziehen.
+</td>
+<td style="text-align:right;">
+28
+</td>
+<td style="text-align:right;">
+56
+</td>
+</tr>
+</tbody>
+</table></li>
+</ol>
+<p>Below is the question in the original English, as well as the
+original English responses in the same order they appear on the table
+above. The correct response is in bold letters.</p>
+<p>After deploying a customer service chatbot, you notice that it
+frequently provides outdated information about company policies. What is
+the best course of action to address this issue?</p>
+<p>D) Conduct a comprehensive audit of the chatbot’s performance metrics
+to identify areas for improvement.</p>
+<p>C) Set up a system where complex or policy-related queries are
+escalated to human agents for accurate responses.</p>
+<p>A) Implement a feedback loop where users can flag outdated
+information for review.</p>
+<p><strong>B) Schedule regular updates to the chatbot’s training data to
+include the latest company policies.</strong></p>
+</div>
+<div id="question-6" class="section level2">
+<h2>Question 6</h2>
+<p>Only slightly over one third of the sample knew what RAG
+(Retrieval-augmented Generation) was most useful for. This could
+demonstrate a misunderstanding of RAG, or could be due to not knowing
+what RAG is.</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+Frequencies for Question 6: GLAT-11
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+<ol start="6" style="list-style-type: decimal">
+<li>Angenommen, Sie haben einen großen Datensatz von E-Mails und möchten
+eine Anwendung erstellen, die auf der Grundlage dieses Datensatzes
+Fragen beantwortet. Welches der folgenden Szenarien veranschaulicht am
+besten den Vorteil der Verwendung von RAG geg
+</th>
+<th style="text-align:right;">
+n
+</th>
+<th style="text-align:right;">
+Percent
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Sie möchten die Größe des Sprachmodells reduzieren, um Rechenressourcen
+zu sparen.
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Sie möchten sicherstellen, dass das Modell Fragen beantworten kann, auch
+wenn es noch nie zuvor ähnliche Fragen gesehen hat.
+</td>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:right;">
+44
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Sie müssen Fragen beantworten, die spezifische Informationen aus
+verschiedenen Teilen des E-Mail-Datensatzes erfordern.
+</td>
+<td style="text-align:right;">
+19
+</td>
+<td style="text-align:right;">
+38
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Sie müssen auf der Grundlage des E-Mail-Inhalts kreative Texte
+verfassen.
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+8
+</td>
+</tr>
+</tbody>
+</table></li>
+</ol>
+<p>Below is the question in the original English, as well as the
+original English responses in the same order they appear on the table
+above. The correct response is in bold letters.</p>
+<p>Suppose you have a large dataset of emails and you want to build an
+application to answer questions based on this dataset. Which of the
+following scenarios best illustrates the advantage of using RAG over
+prompting (i.e., without RAG)?</p>
+<p>D) You want to reduce the size of the language model to save
+computational resources.</p>
+<p>B) You want to ensure the model can answer questions even if it has
+never seen similar questions before.</p>
+<p><strong>C) You need to answer questions that require specific
+information from different parts of the email dataset.</strong></p>
+<p>A) You need to generate creative writing pieces based on the email
+content.</p>
+</div>
+<div id="question-7" class="section level2">
+<h2>Question 7</h2>
+<p>Participants mostly answered this question correctly, though many
+appear to operate with the misconception that LMM results are generally
+more trustworthy than the internet, regardless of how they handle that
+output.</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+Frequencies for Question 7: GLAT-12
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+<ol start="7" style="list-style-type: decimal">
+<li>Wie sollten Sie als Studierende:r, welche:r ein großes Sprachmodell
+(LLM) verwendet, um Informationen für eine Aufgabe zu sammeln, mit den
+Informationen umgehen, die es liefert?
+</th>
+<th style="text-align:right;">
+n
+</th>
+<th style="text-align:right;">
+Percent
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Die Antworten des LLM sind im Allgemeinen vertrauenswürdiger als
+Internetquellen, aber Sie sollten die Informationen trotzdem mit anderen
+zuverlässigen Quellen überprüfen.
+</td>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+28
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Die Antworten des LLM sind immer vertrauenswürdiger als alle
+Informationen, die Sie im Internet finden, so dass Sie sie ohne weitere
+Überprüfung verwenden können.
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Die Antworten des LLM sind nicht unbedingt vertrauenswürdiger als
+Internetquellen und Sie sollten die Informationen mit anderen
+glaubwürdigen Quellen abgleichen.
+</td>
+<td style="text-align:right;">
+32
+</td>
+<td style="text-align:right;">
+64
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Die Antworten des LLM sind weniger vertrauenswürdig als Internetquellen,
+da sie sich auf veraltete Informationen stützen.
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+</tbody>
+</table></li>
+</ol>
+<p>Below is the question in the original English, as well as the
+original English responses in the same order they appear on the table
+above. The correct response is in bold letters.</p>
+<p>As a student using a Large Language Model (LLM) to gather information
+for an assignment, how should you approach the information it
+provides?</p>
+<p>B) The LLM’s answers are generally more trustworthy than internet
+sources, but you should still verify the information with other reliable
+sources.</p>
+<p>A) The LLM’s answers are always more trustworthy than any information
+you will find on the internet, so you can use them without further
+verification.</p>
+<p><strong>C) The LLM’s answers are not necessarily more trustworthy
+than internet sources, and you should cross-check the informa- tion with
+other credible references.</strong></p>
+<p>D) The LLM’s answers are less trustworthy than internet sources
+because it relies on outdated information.</p>
+</div>
+<div id="question-8" class="section level2">
+<h2>Question 8</h2>
+<p>Slightly over half the sample demonstrated a good understanding of
+the limits of GenAI capability due to the knowledge cut off, but many
+falsely believe that a model’s knowledge base is continuously updated or
+that it can generate the real-time knowledge from some unspecified
+source.</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+Frequencies for Question 8: GLAT-13
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+<ol start="8" style="list-style-type: decimal">
+<li>“Es ist unwahrscheinlich, dass ein LLM eine akkurate Zusammenfassung
+der neuesten Finanzmarkttrends in Echtzeit liefern kann”. Ist diese
+Aussage richtig oder falsch?
+</th>
+<th style="text-align:right;">
+n
+</th>
+<th style="text-align:right;">
+Percent
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Falsch, denn das LLM ist in der Lage, die neuesten Marktdaten
+automatisch zu synthetisieren.
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+22
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Falsch, weil das LLM seine Wissensbasis häufig aktualisiert.
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+16
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Richtig, weil das LLM nicht gut im Umgang mit Zahlen und strukturierten
+Daten ist.
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Richtig, weil die Daten des LLM aufgrund seiner Wissensgrenzen veraltet
+sein können.
+</td>
+<td style="text-align:right;">
+27
+</td>
+<td style="text-align:right;">
+54
+</td>
+</tr>
+</tbody>
+</table></li>
+</ol>
+<p>Below is the question in the original English, as well as the
+original English responses in the same order they appear on the table
+above. The correct response is in bold letters.</p>
+<p>It is unlikely for an LLM to provide an accurate summary of the
+latest financial market trends in real-time. Is this statement true or
+false?</p>
+<p>D) False, because the LLM is capable of synthesizing the latest
+market data automatically.</p>
+<p>C) False, because the LLM frequently updates its knowledge base.</p>
+<p>B) True, because the LLM is not good at handling numbers and
+structured data.</p>
+<p><strong>A) True, because the LLM’s data may be outdated due to its
+knowledge cutoff.</strong></p>
+</div>
+<div id="question-9" class="section level2">
+<h2>Question 9</h2>
+<p>46% of participants correctly stated that the summary must be
+cross-checked with the original paper, demonstrating an understanding
+that GenAI models can hallucinate. A different 46% of participants
+stated they would ask the model to tell them more about the paper,
+demonstrating that they did not understand that the model could
+potentially create false output even when provided with a source of
+information. The rest of the sample demonstrated similar misconceptions
+about how to adequately monitor GenAI output for accuaracy.</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+Frequencies for Question 9: GLAT-14
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+<ol start="9" style="list-style-type: decimal">
+<li>Ein generatives KI-Tool hat eine Zusammenfassung einer
+Forschungsarbeit erstellt. In der Zusammenfassung heißt es: „Die Studie
+ergab, dass eine erhöhte Bildschirmzeit direkt mit einer geringeren
+Aufmerksamkeitsspanne bei Kindern im Alter von 8-12 Jahre
+</th>
+<th style="text-align:right;">
+n
+</th>
+<th style="text-align:right;">
+Percent
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Akzeptieren Sie die Zusammenfassung als korrekt, da KI-Tools im
+Allgemeinen zuverlässig sind.
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bitten Sie die KI, mehr Details über die Methodik und die Ergebnisse der
+Studie zu liefern.
+</td>
+<td style="text-align:right;">
+23
+</td>
+<td style="text-align:right;">
+46
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Vergleichen Sie die Zusammenfassung mit dem Original-Forschungsbericht.
+</td>
+<td style="text-align:right;">
+23
+</td>
+<td style="text-align:right;">
+46
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Verwenden Sie ein anderes KI-Tool, um eine Zusammenfassung zum Vergleich
+zu erstellen, und bewerten Sie die Konsistenz zwischen beiden
+Zusammenfassungen.
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+6
+</td>
+</tr>
+</tbody>
+</table></li>
+</ol>
+<p>Below is the question in the original English, as well as the
+original English responses in the same order they appear on the table
+above. The correct response is in bold letters.</p>
+<p>A generative AI tool has provided a summary of a research paper. The
+summary states, “The study found that increased screen time is directly
+correlated with decreased attention spans in children aged 8-12.” What
+is your next step?</p>
+<p>A) Accept the summary as accurate because AI tools are generally
+reliable.</p>
+<p>B) Ask the AI to provide more details about the study’s methodology
+and results.</p>
+<p><strong>C) Cross-check the summary with the original research
+paper.</strong></p>
+<p>D) Use another AI tool to generate a summary for comparison and
+evaluate the consistency between both summaries</p>
+</div>
+<div id="question-10" class="section level2">
+<h2>Question 10</h2>
+<p>Slightly under half the sample understood that GenAI’s reliance on
+historical training data can result in a magnification of historical
+patterns and biases. The rest of the sample failed to make that
+connection, with 38% stating that the ethical issue would stem from
+GenAI accuracy in reviewing resumes.</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+Frequencies for Question 10: GLAT-16
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+<ol start="10" style="list-style-type: decimal">
+<li>Wenn ein generatives KI-System zum Sichten von Bewerbungen
+eingesetzt wird, welches Problem könnte sich dann hinsichtlich der
+Qualität und Fairness von Auswahlentscheidungen ergeben?
+</th>
+<th style="text-align:right;">
+n
+</th>
+<th style="text-align:right;">
+Percent
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Das KI-System könnte bestehende Verzerrungen, die in historischen
+Anstellungsdaten gefunden wurden, noch verstärken.
+</td>
+<td style="text-align:right;">
+23
+</td>
+<td style="text-align:right;">
+46
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Das KI-System könnte einzigartige Leistungen und außerschulische
+Aktivitäten der Bewerber übersehen.
+</td>
+<td style="text-align:right;">
+19
+</td>
+<td style="text-align:right;">
+38
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Das KI-System könnte kleinere Formatierungsunterschiede in Lebensläufen
+falsch interpretieren.
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+16
+</td>
+</tr>
+</tbody>
+</table></li>
+</ol>
+<p>Below is the question in the original English, as well as the
+original English responses in the same order they appear on the table
+above. The correct response is in bold letters.</p>
+<p>When a generative AI system is used for screening job applications,
+what issue might arise concerning the quality and fairness of hiring
+decisions?</p>
+<p><strong>D) The AI system could reinforce existing biases found in
+historical hiring data.</strong></p>
+<p>A) The AI system might overlook applicants’ unique achievements and
+extracurricular activities.</p>
+<p>B) The AI system could misinterpret minor formatting differences in
+resumes.</p>
+<p>The following is another possible response in the original English,
+but it was not chosen by any participant in the sample and therefore
+does not appear in the table above.</p>
+<p>C) The AI system might not effectively handle applications submitted
+in various languages.</p>
+</div>
+<div id="question-11" class="section level2">
+<h2>Question 11</h2>
+<p>Most participants demonstrated an understanding of the black box
+dilemma, but many others demonstrated misconceptions about the source of
+skepticism regarding GenAI output.</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+Frequencies for Question 11: GLAT-17
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+<ol start="11" style="list-style-type: decimal">
+<li>In einem Startup-Unternehmen im Gesundheitswesen empfiehlt ein
+akkurates KI-Modell Behandlungen, aber die Ärzte trauen ihm nicht, weil
+sie nicht verstehen können, wie das Modell zu seinen Schlussfolgerungen
+gekommen ist. Welches Kernproblem veranschau
+</th>
+<th style="text-align:right;">
+n
+</th>
+<th style="text-align:right;">
+Percent
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Das KI-Modell verhält sich wie eine Blackbox.
+</td>
+<td style="text-align:right;">
+32
+</td>
+<td style="text-align:right;">
+64
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Das KI-Modell verwendet veraltete Trainingsdaten.
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Der Trainingsdatensatz ist nicht ausreichend vielfältig.
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+18
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Die eingegebenen Behandlungsrichtlinien sind falsch.
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+8
+</td>
+</tr>
+</tbody>
+</table></li>
+</ol>
+<p>Below is the question in the original English, as well as the
+original English responses in the same order they appear on the table
+above. The correct response is in bold letters.</p>
+<p>In a healthcare startup, an accurate AI model recommends treatments,
+but doctors don’t trust it because they can’t understand how the model
+arrived at its conclusions. What core issue does this scenario
+illustrate?</p>
+<p><strong>D) The AI model behaves as a black box.</strong></p>
+<p>A) The AI model uses obsolete training data.</p>
+<p>B) The training dataset lacks sufficient diversity.</p>
+<p>C) The treatment guidelines input are incorrect.</p>
+</div>
+<div id="question-12" class="section level2">
+<h2>Question 12</h2>
+<p>Over half the sample demonstrated an understanding about the privacy
+concerns of GenAI training data, but many others hold misconceptions
+about the use of encrypted data in GenAI models, beleiving there to be
+some layer of protection preventing the output of private
+information.</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+Frequencies for Question 12
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+<ol start="12" style="list-style-type: decimal">
+<li>“Die Übermittlung personenbezogener Daten an Cloud-basierte
+generative KI-Tools ist datenschutzrechtlich wenig bedenklich”. Ist
+diese Aussage richtig oder falsch?
+</th>
+<th style="text-align:right;">
+n
+</th>
+<th style="text-align:right;">
+Percent
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Falsch, da Fortschritte im Quantencomputing die verschlüsselten Daten
+leicht entschlüsseln können.
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+24
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Falsch, da generative KI-Tools auf unverschlüsselten Daten trainieren
+und aufgrund ihrer probabilistischen Natur private Informationen
+ausgeben können.
+</td>
+<td style="text-align:right;">
+29
+</td>
+<td style="text-align:right;">
+58
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Richtig, da diese Informationen während des Transformationsprozesses
+durch komplexe Algorithmen verschlüsselt werden.
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Richtig, da generative KI-Tools Black-Box-Systeme sind und keine
+persönlichen Informationen ausgeben können, selbst wenn sie für das
+Modelltraining verwendet werden.
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+12
+</td>
+</tr>
+</tbody>
+</table></li>
+</ol>
+<p>Below is the question in the original English, as well as the
+original English responses in the same order they appear on the table
+above. The correct response is in bold letters.</p>
+<p>Sending personal information to cloud-based generative AI tools has
+little privacy concerns.</p>
+<p>D) False, as advancements in quantum computing can easily decipher
+the encrypted data.</p>
+<p><strong>C) False, as generative AI tools train on unencrypted data
+and can output private information based on their probabilistic
+nature.</strong></p>
+<p>A) True, as this information is encrypted using sophisticated
+algorithms during the transmission process.</p>
+<p>B) True, as generative AI tools are black-box systems and cannot
+output personal information even if it is used for model training.</p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

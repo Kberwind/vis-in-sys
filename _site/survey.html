@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+<meta name="date" content="2026-07-02" />
+
+<title>Online Survey</title>
+
+<script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/spacelab.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Seminar Visual and Interactive Systems</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="glat.html">GLAT</a>
+</li>
+<li>
+  <a href="survey.html">Online Survey</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Online Survey</h1>
+<h4 class="date">2026-07-02</h4>
+
+</div>
+
+<div id="TOC">
+<ul>
+<li><a href="#demographics" id="toc-demographics">Demographics</a>
+<ul>
+<li><a href="#age" id="toc-age">Age</a></li>
+<li><a href="#gender" id="toc-gender">Gender</a></li>
+<li><a href="#job-role" id="toc-job-role">Job Role</a></li>
+<li><a href="#genai-usage" id="toc-genai-usage">GenAI Usage</a></li>
+</ul></li>
+<li><a href="#survey-based-on-utaut2"
+id="toc-survey-based-on-utaut2">Survey Based on UTAUT2</a>
+<ul>
+<li><a href="#constructs" id="toc-constructs">Constructs</a></li>
+</ul></li>
+</ul>
+</div>
+
+<div id="demographics" class="section level1 tabset">
+<h1 class="tabset">Demographics</h1>
+<div id="age" class="section level2">
+<h2>Age</h2>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+Frequencies for Age
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+age
+</th>
+<th style="text-align:right;">
+n
+</th>
+<th style="text-align:right;">
+Percent
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+18-29
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+5.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+30-39
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+11.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+40-49
+</td>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+38.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+50-64
+</td>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+38.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+65+
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+5.9
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="gender" class="section level2">
+<h2>Gender</h2>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+Frequencies for Gender
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+gender
+</th>
+<th style="text-align:right;">
+n
+</th>
+<th style="text-align:right;">
+Percent
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Männlich
+</td>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:right;">
+50
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Weiblich
+</td>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:right;">
+50
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="job-role" class="section level2">
+<h2>Job Role</h2>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+Frequencies for Job Role
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+job_role
+</th>
+<th style="text-align:right;">
+n
+</th>
+<th style="text-align:right;">
+Percent
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Ein-Personen-Unternehmen
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+11.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Geschäftsführung
+</td>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+38.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mitarbeiter:in mit Personalverantwortung
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+20.6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mitarbeiter:in ohne Personalverantwortung
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+17.6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Sonstiges
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+11.8
+</td>
+</tr>
+</tbody>
+</table>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+Name &amp; Frequencies for Job Role(Other) Respondents
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+job_role_other
+</th>
+<th style="text-align:right;">
+n
+</th>
+<th style="text-align:right;">
+Percent
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Assistenz der GF
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Digitalisierung und IT-Administration
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+IT Projektmanager
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qualitätsmanagement
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+30
+</td>
+<td style="text-align:right;">
+88.2
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="genai-usage" class="section level2">
+<h2>GenAI Usage</h2>
+The broad majority of the sample responded that they use GenAI multiple
+times a week (n=13[38.2%]) or multiple times a day (n=14[41.2%]).
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+Frequencies for GenAI Usage
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+genai_usage_frequency
+</th>
+<th style="text-align:right;">
+n
+</th>
+<th style="text-align:right;">
+Percent
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Einmal monatlich
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+8.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Einmal täglich
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+8.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mehrmals die Woche
+</td>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+38.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mehrmals im Monat
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mehrmals täglich
+</td>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+41.2
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="survey-based-on-utaut2" class="section level1 tabset">
+<h1 class="tabset">Survey Based on UTAUT2</h1>
+<div id="constructs" class="section level2">
+<h2>Constructs</h2>
+Given the small sample size (N=34), the UTAUT2 was not modeled to see
+which constructs predicted behavioral intention. Only one respondent
+said in the open-ended questions that they do not have use for GenAI.
+When asked how often they use GenAI, every participant in the sample
+reported using it at least once a month. It is therefore logical to
+assume a high degree of acceptance of GenAI among this sample.
+Descriptive statistics below appear to support this. The Habit construct
+is notably lower than the others suggesting participannts did not view
+themselves as having a GenAI habit.
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+Descriptive Statistics for Constructs
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+variable
+</th>
+<th style="text-align:left;">
+mean
+</th>
+<th style="text-align:left;">
+median
+</th>
+<th style="text-align:left;">
+sd
+</th>
+<th style="text-align:left;">
+min
+</th>
+<th style="text-align:left;">
+max
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+pe_mean
+</td>
+<td style="text-align:left;">
+5.245098
+</td>
+<td style="text-align:left;">
+5.333333
+</td>
+<td style="text-align:left;">
+0.7121307
+</td>
+<td style="text-align:left;">
+3.000000
+</td>
+<td style="text-align:left;">
+6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ee_mean
+</td>
+<td style="text-align:left;">
+4.066177
+</td>
+<td style="text-align:left;">
+4.250000
+</td>
+<td style="text-align:left;">
+1.1731026
+</td>
+<td style="text-align:left;">
+1.250000
+</td>
+<td style="text-align:left;">
+6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+si_mean
+</td>
+<td style="text-align:left;">
+3.480392
+</td>
+<td style="text-align:left;">
+3.000000
+</td>
+<td style="text-align:left;">
+0.9955834
+</td>
+<td style="text-align:left;">
+2.000000
+</td>
+<td style="text-align:left;">
+6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fc_mean
+</td>
+<td style="text-align:left;">
+3.698529
+</td>
+<td style="text-align:left;">
+3.625000
+</td>
+<td style="text-align:left;">
+1.1142660
+</td>
+<td style="text-align:left;">
+1.500000
+</td>
+<td style="text-align:left;">
+6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+hm_mean
+</td>
+<td style="text-align:left;">
+4.411765
+</td>
+<td style="text-align:left;">
+4.666667
+</td>
+<td style="text-align:left;">
+1.3028299
+</td>
+<td style="text-align:left;">
+0.000000
+</td>
+<td style="text-align:left;">
+6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ht_mean
+</td>
+<td style="text-align:left;">
+2.558823
+</td>
+<td style="text-align:left;">
+2.666667
+</td>
+<td style="text-align:left;">
+1.4741786
+</td>
+<td style="text-align:left;">
+0.000000
+</td>
+<td style="text-align:left;">
+6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+bi_mean
+</td>
+<td style="text-align:left;">
+5.127451
+</td>
+<td style="text-align:left;">
+5.000000
+</td>
+<td style="text-align:left;">
+0.9175238
+</td>
+<td style="text-align:left;">
+2.333333
+</td>
+<td style="text-align:left;">
+6
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
