@@ -1,5 +1,5 @@
 # visual-interactivesystems
-Data analysis and reporting for Seminar on Visual and Interactive Systems and TU Graz.
+Data analysis and reporting for Seminar on Visual and Interactive Systems at TU Graz.
 
 This repository contains
 
